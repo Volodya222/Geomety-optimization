@@ -25,12 +25,7 @@ def maxwell_to_mutual(matrix, decimals):
     return new_matrix
 
 
-# размер квадратной матрицы
-N = 7
-# matrix - матрица, count - кол-во деталей
-matrix0, count = gt.parts(gt.smooth(np.random.randint(0, 2, (N, N))))
-radius1 = 0.1
-# m = np.array([[1,1,1,1,1], [0,0,0,1,0], [0,0,1,0,0],[0,1,0,0,0],[1,1,1,1,1] ])
+
 
 
 # генерирует детали
@@ -102,6 +97,11 @@ def change_radius_out(model, geometry, circle_ground, r):
 
 # считает матрицу
 def evaluate_matrix(model, dataset):
+
+    # print(model.evaluate('es.C11', 'pF', 'Study 2//Parametric Solutions 2'))
+    # print(model.evaluate('es.C22', 'pF'))
+    # print(model.evaluate('es.C12', 'pF'))
+
     answer = np.zeros((2, 2))
     for i in range(1, 3):
         for j in range(1, 3):
@@ -109,31 +109,35 @@ def evaluate_matrix(model, dataset):
     return answer
 
 
-geometry1 = 'geometry_test'
-circle_ground1 = 'circle_ground'
-ground1 = 'ground'
-terminal_leg1 = 'terminal_leg'
-terminal_other1 = 'terminal_other'
-initial_values1 = 'Initial Values 1'
-physics1 = 'Electrostatics'
 
 
-client = mph.start()
-model1 = client.load("test.mph")
-remove_details(model1, geometry1)
-model1.build(geometry1)
-model1.save()
+if __name__ == "__main__":
+    # размер квадратной матрицы
+    N = 7
+    # matrix - матрица, count - кол-во деталей
+    matrix0, count = gt.parts(gt.smooth(np.random.randint(0, 2, (N, N))))
+    radius1 = 0.1
+    geometry1 = 'geometry_test'
+    circle_ground1 = 'circle_ground'
+    ground1 = 'ground'
+    terminal_leg1 = 'terminal_leg'
+    terminal_other1 = 'terminal_other'
+    initial_values1 = 'Initial Values 1'
+    physics1 = 'Electrostatics'
+    client = mph.start()
+    model1 = client.load("test.mph")
+    remove_details(model1, geometry1)
+    model1.build(geometry1)
+    model1.save()
 
 
+    creating_details(matrix0, N, radius1*2, model1, geometry1, physics1, terminal_other1, initial_values1, terminal_leg1)
+    change_radius_out(model1, geometry1, circle_ground1, 0.2)
+    model1.build(geometry1)
+    model1.save()
+    model1.solve('Study 1')
+    m = evaluate_matrix(model1, 'Study 1//Parametric Solutions 2')
+    print(m)
 
-
-creating_details(matrix0, N, radius1*2, model1, geometry1, physics1, terminal_other1, initial_values1, terminal_leg1)
-change_radius_out(model1, geometry1,circle_ground1, 0.2)
-model1.build(geometry1)
-model1.save()
-model1.solve('Study 1')
-m = evaluate_matrix(model1, 'Study 1//Parametric Solutions 2')
-print(m)
-
-model1.save()
+    model1.save()
 
