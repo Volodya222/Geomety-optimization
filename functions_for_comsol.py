@@ -102,11 +102,19 @@ def evaluate_matrix(model, dataset):
     # print(model.evaluate('es.C22', 'pF'))
     # print(model.evaluate('es.C12', 'pF'))
 
-    answer = np.zeros((2, 2))
-    for i in range(1, 3):
-        for j in range(1, 3):
-            answer[i-1][j-1] = model.evaluate('es.C'+str(i)+str(j), 'pF', dataset=dataset)
-    return answer
+    C11 = model.evaluate('es.C11', 'pF', 'Study 1//Parametric Solutions 2')
+    C22 = model.evaluate('es.C22', 'pF')
+    C12 = model.evaluate('es.C12', 'pF')
+    
+    print(type(C11))
+
+    return C11, C12, C22
+
+#    answer = np.zeros((2, 2))
+#    for i in range(1, 3):
+#        for j in range(1, 3):
+#            answer[i-1][j-1] = model.evaluate('es.C'+str(i)+str(j), 'pF', dataset=dataset)
+#    return answer
 
 
 
@@ -132,12 +140,15 @@ if __name__ == "__main__":
 
 
     creating_details(matrix0, N, radius1*2, model1, geometry1, physics1, terminal_other1, initial_values1, terminal_leg1)
-    change_radius_out(model1, geometry1, circle_ground1, 0.2)
+#    change_radius_out(model1, geometry1, circle_ground1, 0.2)
     model1.build(geometry1)
     model1.save()
     model1.solve('Study 1')
-    m = evaluate_matrix(model1, 'Study 1//Parametric Solutions 2')
-    print(m)
+#    m = evaluate_matrix(model1, 'Study 1//Parametric Solutions 2')
+    print(model.evaluate('es.C11', 'pF', 'Study 2//Parametric Solutions 2'))
+    print(model.evaluate('es.C22', 'pF'))
+    print(model.evaluate('es.C12', 'pF'))
+#    print(m)
 
     model1.save()
 
