@@ -1,9 +1,5 @@
 import numpy as np
 from matplotlib import pyplot as plt
-
-N = 10
-N_part = 10
-    
 def parts(x):
     count = 0
     stop_flag = False
@@ -112,16 +108,4 @@ while count != N_part:
     x = np.random.randint(0, 2, (N,N))
     y, count = parts(x)
 '''
-x = np.random.randint(0, 2, (N,N))
 
-plt.imshow(x)
-plt.colorbar()
-plt.show()
-x1 = smooth(x)
-y, count = parts(x1)
-plt.imshow(x1)
-plt.colorbar()
-plt.show()
-plt.imshow(y)
-plt.colorbar()
-plt.show()
