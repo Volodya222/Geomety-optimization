@@ -34,9 +34,9 @@ def ground(y, ground_flag, rad_ground):
 
 def mutation(y):
 
-    # mutation_number = np.random.randint(1, count+1)
+    mutation_number = np.random.randint(1, count+1)
     mutation_flag = True
-    mutation_number = 1
+    # mutation_number = 1
     number_list = []
     neighbors_list = []
 
@@ -168,6 +168,7 @@ plt.show()
 print(mutation_flag)
 print(count)
 print(count_new)
+
 
 
 

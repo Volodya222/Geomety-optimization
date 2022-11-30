@@ -47,10 +47,22 @@ for i in range(0, N):
 y, count = gt.parts(y)
 y_1, count_1 = gt.parts(y_1)
 
+count_min = min(count, count_1)
+# kross_number = np.random.randint(1, count_min + 1)
+kross_number = 1
+
+
+
+
+
+
 
 def krossingover(y,y_1):
     mutation_flag = True
     mutation_flag1 = True
+    count_min = min(count, count_1)
+    # kross_number = np.random.randint(1, count_min + 1)
+    kross_number = 1
     '''
     for i in range(0, N):
         y[0, i] = 0
@@ -62,9 +74,7 @@ def krossingover(y,y_1):
             if np.power(i - rad_ground, 2) + np.power(j - rad_ground, 2) >= np.power(rad_ground, 2):
                 y[i, j] = 0
        '''
-    count_min = min(count, count_1)
-    # kross_number = np.random.randint(1, count_min + 1)
-    kross_number = 1
+
     for i in range(count):
         count_matrix.append([])
     for k in range(1, count + 1):
@@ -165,7 +175,8 @@ def krossingover(y,y_1):
         for j in range(len(count_matrix_new_copy1[i])):
             n, k = count_matrix_new_copy1[i][j]
             y_new1[n, k] = i + 1
-
+    
+    # return(y_new, y_new1)
     return(y, y_new, count_matrix, count, y_1, y_new1, count_matrix_1, count_1, mutation_flag, mutation_flag1, count_new, count_new1)
 
 y, y_new, count_matrix, count, y_1, y_new1, count_matrix_1, count_1, mutation_flag, mutation_flag1, count_new, count_new1 = krossingover(y, y_1)
