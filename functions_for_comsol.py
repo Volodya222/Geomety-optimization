@@ -69,20 +69,6 @@ def creating_details(matrix, size: int, a, model, geometry, physic, terminal_oth
     return
 
 
-# генерирует землю
-# def creating_ground(model, radius, geometry):
-#     node_local = model/'geometry'/geometry
-#     node_local.create('Circle', name='circle_ground')
-#     node_local = model / 'geometry' / geometry/'circle_ground'
-#     node_local.property('r', radius)
-#     node_local.property('x', str(-radius))
-#     node_local.property('y', str(-radius))
-#     node_local.property('type', 'solid')
-#     node_local.property('selresultshow', 'all')
-#     node_local.property('color', '2')
-#     return
-
-
 # смена радиуса земли
 def change_radius_out(model, geometry, circle_ground, r):
     node_local = model/'geometry'/geometry/circle_ground
@@ -98,7 +84,7 @@ def evaluate_matrix(model, dataset):
     c11_new = c11 + c21
     c21_new = (-1)*c21
     c22_new = c22 + c21
-    answer = np.array([c11_new, c21_new, c22_new])
+    answer = np.array([c11_new*np.power(10, 12), c21_new*np.power(10, 12), c22_new*np.power(10, 12)])
     return answer
 
 
