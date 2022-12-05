@@ -1,9 +1,5 @@
 import numpy as np
 from matplotlib import pyplot as plt
-
-N = 10
-N_part = 10
-    
 def parts(x):
     count = 0
     stop_flag = False
@@ -112,5 +108,4 @@ while count != N_part:
     x = np.random.randint(0, 2, (N,N))
     y, count = parts(x)
 '''
-x = np.random.randint(0, 2, (N,N))
 
