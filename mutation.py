@@ -2,6 +2,7 @@ import geomety_test as gt
 import numpy as np
 import copy
 from matplotlib import pyplot as plt
+import ground
 
 N = 10
 x = np.random.randint(0, 2, (N,N))
@@ -9,19 +10,7 @@ x1 = gt.smooth(x)
 y, count = gt.parts(x1)
 rad_ground = N / 2
 ground_flag = False
-for i in range(0, N):
-    for j in range(0, N):
-        if np.power(j * 2 * rad_ground / N - rad_ground, 2) + np.power(i * 2 * rad_ground / N - rad_ground,
-                                                                       2) < np.power(rad_ground, 2) and \
-                np.power((j + 1) * 2 * rad_ground / N - rad_ground, 2) + np.power(
-            (i + 1) * 2 * rad_ground / N - rad_ground, 2) < np.power(rad_ground, 2) and \
-                np.power(j * 2 * rad_ground / N - rad_ground, 2) + np.power(
-            (i + 1) * 2 * rad_ground / N - rad_ground, 2) < np.power(rad_ground, 2) and \
-                np.power((j + 1) * 2 * rad_ground / N - rad_ground, 2) + np.power(
-            i * 2 * rad_ground / N - rad_ground, 2) < np.power(rad_ground, 2): \
-                mutation_flag = True
-        else:
-            y[i, j] = 0
+y = ground.ground_test(y, rad_ground, N)
 y, count = gt.parts(y)
 
 '''
@@ -61,8 +50,8 @@ def mutation(y):
                     neighbors_list.append([i, j+1])
                 if y[i, j-1] == 0:
                     neighbors_list.append([i, j-1])
-    # pixels_fate = np.random.randint(0, 2)
-    pixels_fate = 0
+    pixels_fate = np.random.randint(0, 2)
+    # pixels_fate = 0
     positions_for_delete = []
     k = 0
     y_1 = copy.copy(y)
@@ -133,16 +122,7 @@ def mutation(y):
                     if y_1[i, j] != y_1[i-1, j-1]:
                         mutation_flag = False
                         '''
-    for i in range(0, N):
-        for j in range(0, N):
-            if np.power(j * 2*rad_ground / N - rad_ground, 2) + np.power(i * 2*rad_ground / N - rad_ground, 2) < np.power(rad_ground, 2) and \
-               np.power((j+1) * 2 * rad_ground / N - rad_ground, 2) + np.power((i+1) * 2 * rad_ground / N - rad_ground, 2) < np.power(rad_ground, 2) and \
-               np.power(j * 2 * rad_ground / N - rad_ground, 2) + np.power((i+1) * 2 * rad_ground / N - rad_ground, 2) < np.power(rad_ground, 2) and \
-               np.power((j+1) * 2 * rad_ground / N - rad_ground, 2) + np.power(i * 2 * rad_ground / N - rad_ground, 2) < np.power(rad_ground, 2): \
-                mutation_flag = True
-            else:
-
-                y_1[i, j] = 0
+    y_1 = ground.ground_test(y_1, rad_ground, N)
     zero_matrix = np.zeros_like(y)
     zero_matrix, count_new = gt.parts(y_1)
     
@@ -152,22 +132,20 @@ def mutation(y):
         mutation_flag = False
 
     if mutation_flag == True:
-        return y, y_1, pixels_fate, mutation_number, positions_for_delete, mutation_flag, count_new
+        return y_1
     else:
-        return y, y_1, pixels_fate, mutation_number, positions_for_delete, mutation_flag, count_new
+        return y
 
 # print(mutation(y))
-
-y, y_1, pixels_fate, mutation_number, positions_for_delete, mutation_flag, count_new = mutation(y)
+'''
+y, y_1,  = mutation(y)
 
 
 plt.imshow(y)
 plt.show()
 plt.imshow(y_1)
 plt.show()
-print(mutation_flag)
-print(count)
-print(count_new)
+'''
 
 
 

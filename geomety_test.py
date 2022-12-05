@@ -114,14 +114,3 @@ while count != N_part:
 '''
 x = np.random.randint(0, 2, (N,N))
 
-plt.imshow(x)
-plt.colorbar()
-plt.show()
-x1 = smooth(x)
-y, count = parts(x1)
-plt.imshow(x1)
-plt.colorbar()
-plt.show()
-plt.imshow(y)
-plt.colorbar()
-plt.show()

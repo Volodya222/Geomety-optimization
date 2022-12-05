@@ -2,10 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b55eca0d-8fe7-4669-add1-8ddd8ee6aaa2" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Converting to matrix.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gen_alg.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/krossing_lists.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gen_alg.py" beforeDir="false" afterPath="$PROJECT_DIR$/gen_alg.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/geomety_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/geomety_test.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/krossingover.py" beforeDir="false" afterPath="$PROJECT_DIR$/krossingover.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mutation.py" beforeDir="false" afterPath="$PROJECT_DIR$/mutation.py" afterDir="false" />
     </list>
@@ -36,7 +35,7 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="configurable.group.tools" />
   </component>
-  <component name="RunManager" selected="Python.gen_alg">
+  <component name="RunManager" selected="Python.mutation">
     <configuration name="gen_alg" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -123,9 +122,9 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.gen_alg" />
         <item itemvalue="Python.mutation" />
         <item itemvalue="Python.krossingover" />
+        <item itemvalue="Python.gen_alg" />
         <item itemvalue="Python.test" />
       </list>
     </recent_temporary>
