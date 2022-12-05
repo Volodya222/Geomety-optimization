@@ -2,6 +2,7 @@ import geomety_test as gt
 import numpy as np
 import copy
 from matplotlib import pyplot as plt
+import ground
 
 N = 15
 x = np.random.randint(0, 2, (N,N))
@@ -16,41 +17,27 @@ count_matrix_1 = []
 zero = np.zeros_like(y)
 mutation_flag = True
 mutation_flag1 = True
-for i in range(0, N):
-    for j in range(0, N):
-        if np.power(j * 2 * rad_ground / N - rad_ground, 2) + np.power(i * 2 * rad_ground / N - rad_ground,
-                                                                       2) < np.power(rad_ground, 2) and \
-                np.power((j + 1) * 2 * rad_ground / N - rad_ground, 2) + np.power(
-            (i + 1) * 2 * rad_ground / N - rad_ground, 2) < np.power(rad_ground, 2) and \
-                np.power(j * 2 * rad_ground / N - rad_ground, 2) + np.power((i + 1) * 2 * rad_ground / N - rad_ground,
-                                                                            2) < np.power(rad_ground, 2) and \
-                np.power((j + 1) * 2 * rad_ground / N - rad_ground, 2) + np.power(i * 2 * rad_ground / N - rad_ground,
-                                                                                  2) < np.power(rad_ground, 2): \
-                mutation_flag = True
-        else:
-
-            y[i, j] = 0
-for i in range(0, N):
-    for j in range(0, N):
-        if np.power(j * 2 * rad_ground / N - rad_ground, 2) + np.power(i * 2 * rad_ground / N - rad_ground,
-                                                                       2) < np.power(rad_ground, 2) and \
-                np.power((j + 1) * 2 * rad_ground / N - rad_ground, 2) + np.power(
-            (i + 1) * 2 * rad_ground / N - rad_ground, 2) < np.power(rad_ground, 2) and \
-                np.power(j * 2 * rad_ground / N - rad_ground, 2) + np.power((i + 1) * 2 * rad_ground / N - rad_ground,
-                                                                            2) < np.power(rad_ground, 2) and \
-                np.power((j + 1) * 2 * rad_ground / N - rad_ground, 2) + np.power(i * 2 * rad_ground / N - rad_ground,
-                                                                                  2) < np.power(rad_ground, 2): \
-                mutation_flag = True
-        else:
-
-            y_1[i, j] = 0
+y = ground.ground_test(y, rad_ground, N)
+y_1 = ground.ground_test(y_1, rad_ground, N)
 y, count = gt.parts(y)
 y_1, count_1 = gt.parts(y_1)
+
+count_min = min(count, count_1)
+# kross_number = np.random.randint(1, count_min + 1)
+kross_number = 1
+
+
+
+
+
 
 
 def krossingover(y,y_1):
     mutation_flag = True
     mutation_flag1 = True
+    count_min = min(count, count_1)
+    # kross_number = np.random.randint(1, count_min + 1)
+    kross_number = 1
     '''
     for i in range(0, N):
         y[0, i] = 0
@@ -62,9 +49,7 @@ def krossingover(y,y_1):
             if np.power(i - rad_ground, 2) + np.power(j - rad_ground, 2) >= np.power(rad_ground, 2):
                 y[i, j] = 0
        '''
-    count_min = min(count, count_1)
-    # kross_number = np.random.randint(1, count_min + 1)
-    kross_number = 1
+
     for i in range(count):
         count_matrix.append([])
     for k in range(1, count + 1):
@@ -165,20 +150,14 @@ def krossingover(y,y_1):
         for j in range(len(count_matrix_new_copy1[i])):
             n, k = count_matrix_new_copy1[i][j]
             y_new1[n, k] = i + 1
-
-    return(y, y_new, count_matrix, count, y_1, y_new1, count_matrix_1, count_1, mutation_flag, mutation_flag1, count_new, count_new1)
-
-y, y_new, count_matrix, count, y_1, y_new1, count_matrix_1, count_1, mutation_flag, mutation_flag1, count_new, count_new1 = krossingover(y, y_1)
+    
+    return(y_new, y_new1)
+    # return(y, y_new, count_matrix, count, y_1, y_new1, count_matrix_1, count_1, mutation_flag, mutation_flag1, count_new, count_new1)
 '''
-plt.imshow(y)
-plt.show()
-plt.imshow(y_1)
-plt.show()
-plt.imshow(y_new)
-plt.show()
-plt.imshow(y_new1)
-plt.show()
-'''
+y_new, y_new1 = krossingover(y, y_1)
+
+
+
 ang = np.linspace(0, 2*np.pi)
 xs = np.cos(ang) * rad_ground + rad_ground - rad_ground / N
 ys = np.sin(ang) * rad_ground + rad_ground - rad_ground / N
@@ -192,7 +171,5 @@ axs[1, 0].plot(xs, ys)
 axs[0, 1].plot(xs, ys)
 axs[1, 1].plot(xs, ys)
 plt.show()
-# print(krossingover(y, y_1))
-print(mutation_flag)
-print(mutation_flag1)
-print(count, count_1, count_new, count_new1)
+
+'''
