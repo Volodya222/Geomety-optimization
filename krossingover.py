@@ -3,7 +3,7 @@ import numpy as np
 import copy
 from matplotlib import pyplot as plt
 import ground
-
+'''
 N = 15
 x = np.random.randint(0, 2, (N,N))
 x1 = gt.smooth(x)
@@ -21,10 +21,7 @@ y = ground.ground_test(y, rad_ground, N)
 y_1 = ground.ground_test(y_1, rad_ground, N)
 y, count = gt.parts(y)
 y_1, count_1 = gt.parts(y_1)
-
-count_min = min(count, count_1)
-# kross_number = np.random.randint(1, count_min + 1)
-kross_number = 1
+'''
 
 
 
@@ -32,12 +29,20 @@ kross_number = 1
 
 
 
-def krossingover(y,y_1):
+
+def krossingover(y,y_1, N):
+    rad_ground = N / 2
+    count_matrix = []
+    count_matrix_1 = []
+    y = ground.ground_test(y, rad_ground, N)
+    y_1 = ground.ground_test(y_1, rad_ground, N)
+    a, count = gt.parts(y)
+    a_1, count_1 = gt.parts(y_1)
     mutation_flag = True
     mutation_flag1 = True
     count_min = min(count, count_1)
-    # kross_number = np.random.randint(1, count_min + 1)
-    kross_number = 1
+    kross_number = np.random.randint(1, count_min + 1)
+    # kross_number = 1
     '''
     for i in range(0, N):
         y[0, i] = 0
@@ -98,11 +103,11 @@ def krossingover(y,y_1):
     zero_matrix1 = np.zeros_like(y)
     zero_matrix1, count_new1 = gt.parts(y_new1)
     if count_new == count:
-        mutation_flag
+        pass
     else:
         mutation_flag = False
     if count_new1 == count_1:
-        mutation_flag1
+        pass
     else:
         mutation_flag1 = False
 
@@ -117,8 +122,7 @@ def krossingover(y,y_1):
                                     r1 = np.array(count_matrix_new[kross_number - 1][i])
                                     r2 = np.array(count_matrix_new[j][k])
                                     if (np.abs(r1 - r2)).max() <= 1:
-                                        # print(count_matrix_new_copy[kross_number - 1])
-                                        # print(count_matrix_new[kross_number - 1][i])
+
                                         count_matrix_new_copy[kross_number - 1].remove(count_matrix_new[kross_number - 1][i])
                                         del_flag = True
                                         break
@@ -154,10 +158,10 @@ def krossingover(y,y_1):
     return(y_new, y_new1)
     # return(y, y_new, count_matrix, count, y_1, y_new1, count_matrix_1, count_1, mutation_flag, mutation_flag1, count_new, count_new1)
 '''
-y_new, y_new1 = krossingover(y, y_1)
+y_new, y_new1, kross = krossingover(y, y_1)
 
 
-
+print(kross)
 ang = np.linspace(0, 2*np.pi)
 xs = np.cos(ang) * rad_ground + rad_ground - rad_ground / N
 ys = np.sin(ang) * rad_ground + rad_ground - rad_ground / N
@@ -171,5 +175,4 @@ axs[1, 0].plot(xs, ys)
 axs[0, 1].plot(xs, ys)
 axs[1, 1].plot(xs, ys)
 plt.show()
-
 '''

@@ -3,8 +3,9 @@ import numpy as np
 import copy
 from matplotlib import pyplot as plt
 import ground
+import  fix_det as fd
 
-N = 10
+'''
 x = np.random.randint(0, 2, (N,N))
 x1 = gt.smooth(x)
 y, count = gt.parts(x1)
@@ -13,7 +14,7 @@ ground_flag = False
 y = ground.ground_test(y, rad_ground, N)
 y, count = gt.parts(y)
 
-'''
+
 def ground(y, ground_flag, rad_ground):
     for i in range(1, N-1):
         for j in range(1, N-1):
@@ -21,8 +22,10 @@ def ground(y, ground_flag, rad_ground):
                 y[i, j] = 0
 '''
 
-def mutation(y):
-
+def mutation(y, N):
+    rad_ground = N / 2
+    a, count = gt.parts(y)
+    count_matrix = []
     mutation_number = np.random.randint(1, count+1)
     mutation_flag = True
     # mutation_number = 1
@@ -93,39 +96,19 @@ def mutation(y):
                             k += 1
         for i in range(0, len(positions_for_delete)):
              y_1[positions_for_delete[i][0], positions_for_delete[i][1]] = mutation_number
-    '''
-    for i in range(1,N-1):
-        for j in range(1,N-1):
-            if y_1[i, j] != 0:
-                if y_1[i+1, j] != 0:
-                    if y_1[i, j] != y_1[i+1, j]:
-                        mutation_flag = False
-                if y_1[i-1, j] != 0:
-                    if y_1[i, j] != y_1[i-1, j]:
-                        mutation_flag = False
-                if y_1[i, j+1] != 0:
-                    if y_1[i, j] != y_1[i, j+1]:
-                        mutation_flag = False
-                if y_1[i, j-1] != 0:
-                    if y_1[i, j] != y_1[i, j-1]:
-                        mutation_flag = False
-                if y_1[i+1, j+1] != 0:
-                    if y_1[i, j] != y_1[i+1, j+1]:
-                        mutation_flag = False
-                if y_1[i+1, j-1] != 0:
-                    if y_1[i, j] != y_1[i+1, j-1]:
-                        mutation_flag = False
-                if y_1[i-1, j+1] != 0:
-                    if y_1[i, j] != y_1[i-1, j+1]:
-                        mutation_flag = False
-                if y_1[i-1, j-1] != 0:
-                    if y_1[i, j] != y_1[i-1, j-1]:
-                        mutation_flag = False
-                        '''
+
     y_1 = ground.ground_test(y_1, rad_ground, N)
+    for i in range(count):
+        count_matrix.append([])
+    for k in range(1, count + 1):
+        for i in range(0, N):
+            for j in range(0, N):
+                if y[i, j] == k:
+                    count_matrix[k-1].append([i, j])
+
     zero_matrix = np.zeros_like(y)
     zero_matrix, count_new = gt.parts(y_1)
-    
+
     if count_new == count:
         mutation_flag
     else:
@@ -134,18 +117,24 @@ def mutation(y):
     if mutation_flag == True:
         return y_1
     else:
-        return y
+        count_matrix_new_copy = fd.intersections(count_matrix, mutation_number)
+        for i in range(len(count_matrix_new_copy)):
+            for j in range(len(count_matrix_new_copy[i])):
+                n, k = count_matrix_new_copy[i][j]
+                y_1[n, k] = i + 1
+        return y_1
 
 # print(mutation(y))
 '''
-y, y_1,  = mutation(y)
+y, y_1, mutation_flag  = mutation(y)
 
-
+print(mutation_flag)
 plt.imshow(y)
 plt.show()
 plt.imshow(y_1)
 plt.show()
 '''
+
 
 
 

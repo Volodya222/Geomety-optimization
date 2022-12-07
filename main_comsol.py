@@ -18,7 +18,7 @@ def capacitance(matrix, radius):
     ffc.remove_details(model0, geometry0)
     ffc.creating_details(matrix, n, radius * 2, model0, geometry0, physics0, terminal_other0, initial_values0,
                          terminal_leg0)
-    ffc.change_radius_out(model0, geometry0, circle_ground0, radius)
+    # ffc.change_radius_out(model0, geometry0, circle_ground0, radius)
     model0.build(geometry0)
     model0.solve('Study 1')
     vector = ffc.evaluate_matrix(model0, 'Study 1//Parametric Solutions 2')
