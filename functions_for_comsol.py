@@ -1,6 +1,4 @@
 import numpy as np
-import mph as mph
-import geomety_test as gt
 
 
 # очищает геометрию модели
@@ -8,21 +6,12 @@ def remove_details(model, geometry):
     node_local = model/'geometry'/geometry
     list_of_details = node_local.children()
     for i in range(0, len(list_of_details)-1):
-        # detail_i -- название объекта в геометрии
+        # detail_i - название объекта в геометрии
         detail_i = str(list_of_details[i]).partition('/')[2][str(list_of_details[i]).partition('/')[2].find('/')+1:]
         if detail_i != 'circle_ground':
             node_local_local = node_local/detail_i
             node_local_local.remove()
     return
-
-
-def maxwell_to_mutual(matrix, decimals):
-    new_matrix = np.array([[1., 1.], [1., 1.]])
-    new_matrix[0, 0] = np.around(matrix[0, 0] + matrix[0, 1], decimals)
-    new_matrix[0, 1] = np.around((-1)*matrix[0, 1], decimals)
-    new_matrix[1, 0] = np.around((-1)*matrix[1, 0], decimals)
-    new_matrix[1, 1] = np.around(matrix[1, 0] + matrix[1, 1], decimals)
-    return new_matrix
 
 
 # генерирует детали
@@ -50,8 +39,8 @@ def creating_details(matrix, size: int, a, model, geometry, physic, terminal_oth
                 node_local.property('y', -i*k-k/2)
                 model.build(geometry)
 
-    list_terminal = np.delete(node_values.selection(), 0)
-
+    # list_terminal = np.delete(node_values.selection(), 0)
+    list_terminal = node_values.selection()
     c = 0
     for j in range(0, size):
         for i in range(size-1, -1, -1):
@@ -73,10 +62,23 @@ def creating_details(matrix, size: int, a, model, geometry, physic, terminal_oth
 def change_radius_out(model, geometry, circle_ground, r):
     node_local = model/'geometry'/geometry/circle_ground
     node_local.property('r', r)
+    node_local.property('x', r)
+    node_local.property('y', -r)
+    model.save()
     return
 
 
-# считает емкости
+# смена радиуса земли для цилиндра
+def change_radius_out_cylinder(model, geometry, circle_ground, o, r):
+    node_local = model/'geometry'/geometry/circle_ground
+    node_local.property('r', r)
+    node_local.property('x', o/2)
+    node_local.property('y', -o/2)
+    model.save()
+    return
+
+
+# считает емкости(частичные)
 def evaluate_matrix(model, dataset):
     c11 = model.evaluate('es.C11', 'pF', dataset=dataset)
     c21 = model.evaluate('es.C21', 'pF', dataset=dataset)
@@ -84,11 +86,8 @@ def evaluate_matrix(model, dataset):
     c11_new = c11 + c21
     c21_new = (-1)*c21
     c22_new = c22 + c21
-    answer = np.array([c11_new*np.power(10, 12), c21_new*np.power(10, 12), c22_new*np.power(10, 12)])
+    answer = np.array([c11_new, c21_new, c22_new])
     return answer
-
-
-
 
 # if __name__ == "__main__":
 #     # размер квадратной матрицы
