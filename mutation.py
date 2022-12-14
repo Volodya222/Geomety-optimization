@@ -6,6 +6,7 @@ import ground
 import  fix_det as fd
 
 '''
+N = 15
 x = np.random.randint(0, 2, (N,N))
 x1 = gt.smooth(x)
 y, count = gt.parts(x1)
@@ -13,14 +14,9 @@ rad_ground = N / 2
 ground_flag = False
 y = ground.ground_test(y, rad_ground, N)
 y, count = gt.parts(y)
-
-
-def ground(y, ground_flag, rad_ground):
-    for i in range(1, N-1):
-        for j in range(1, N-1):
-            if np.power(i - rad_ground, 2) + np.power(j - rad_ground, 2) > np.power(rad_ground, 2):
-                y[i, j] = 0
 '''
+
+
 
 def mutation(y, N):
     rad_ground = N / 2
@@ -38,7 +34,7 @@ def mutation(y, N):
         y[i, 0] = 0
         y[N-1, i] = 0
         y[i, N-1] = 0
-        '''
+    '''
 
     for i in range(1, N-1):
         for j in range(1, N-1):
@@ -110,23 +106,29 @@ def mutation(y, N):
     zero_matrix, count_new = gt.parts(y_1)
 
     if count_new == count:
-        mutation_flag
+        mutation_flag = True
     else:
         mutation_flag = False
 
     if mutation_flag == True:
-        return y_1
+        pass
     else:
         count_matrix_new_copy = fd.intersections(count_matrix, mutation_number)
         for i in range(len(count_matrix_new_copy)):
             for j in range(len(count_matrix_new_copy[i])):
                 n, k = count_matrix_new_copy[i][j]
                 y_1[n, k] = i + 1
-        return y_1
-
+    zero_matrix, count_new = gt.parts(y_1)
+    if count_new == count:
+        mutation_flag = True
+    else:
+        mutation_flag = False
+    if (y == y_1).all():
+        mutation_flag = False
+    return y_1, mutation_flag
 # print(mutation(y))
 '''
-y, y_1, mutation_flag  = mutation(y)
+y, y_1, mutation_flag  = mutation(y, N)
 
 print(mutation_flag)
 plt.imshow(y)

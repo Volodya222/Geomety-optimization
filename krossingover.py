@@ -30,7 +30,7 @@ y_1, count_1 = gt.parts(y_1)
 
 
 
-def krossingover(y,y_1, N):
+def krossingover(y,y_1, N, kross_number):
     rad_ground = N / 2
     count_matrix = []
     count_matrix_1 = []
@@ -41,7 +41,7 @@ def krossingover(y,y_1, N):
     mutation_flag = True
     mutation_flag1 = True
     count_min = min(count, count_1)
-    kross_number = np.random.randint(1, count_min + 1)
+    # kross_numbers = np.random.permutation(np.arange(1, count_min + 1))
     # kross_number = 1
     '''
     for i in range(0, N):
@@ -154,14 +154,25 @@ def krossingover(y,y_1, N):
         for j in range(len(count_matrix_new_copy1[i])):
             n, k = count_matrix_new_copy1[i][j]
             y_new1[n, k] = i + 1
-    
-    return(y_new, y_new1)
+    mutation_flag = True
+    mutation_flag1 = True
+    zero_matrix, count_new = gt.parts(y_new)
+    zero_matrix1, count_new1 = gt.parts(y_new1)
+    if count_new == count:
+        pass
+    else:
+        mutation_flag = False
+    if count_new1 == count_1:
+        pass
+    else:
+        mutation_flag1 = False
+    return(y_new, y_new1, mutation_flag, mutation_flag1)
     # return(y, y_new, count_matrix, count, y_1, y_new1, count_matrix_1, count_1, mutation_flag, mutation_flag1, count_new, count_new1)
 '''
-y_new, y_new1, kross = krossingover(y, y_1)
+y_new, y_new1, f1,f2 = krossingover(y, y_1,N)
 
 
-print(kross)
+print(f1, f2)
 ang = np.linspace(0, 2*np.pi)
 xs = np.cos(ang) * rad_ground + rad_ground - rad_ground / N
 ys = np.sin(ang) * rad_ground + rad_ground - rad_ground / N
