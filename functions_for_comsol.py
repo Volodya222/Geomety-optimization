@@ -39,6 +39,7 @@ def creating_details(matrix, size: int, a, model, geometry, physic, terminal_oth
                 node_local.property('y', -i*k-k/2)
                 model.build(geometry)
 
+    #
     # list_terminal = np.delete(node_values.selection(), 0)
     list_terminal = node_values.selection()
     c = 0
@@ -89,33 +90,51 @@ def evaluate_matrix(model, dataset):
     answer = np.array([c11_new, c21_new, c22_new])
     return answer
 
-# if __name__ == "__main__":
-#     # размер квадратной матрицы
-#     N = 7
-#     # matrix - матрица, count - кол-во деталей
-#     matrix0, count = gt.parts(gt.smooth(np.random.randint(0, 2, (N, N))))
-#     radius1 = 0.1
-#     geometry1 = 'geometry_test'
-#     circle_ground1 = 'circle_ground'
-#     ground1 = 'ground'
-#     terminal_leg1 = 'terminal_leg'
-#     terminal_other1 = 'terminal_other'
-#     initial_values1 = 'Initial Values 1'
-#     physics1 = 'Electrostatics'
-#     client = mph.start()
-#     model1 = client.load("test.mph")
-#     remove_details(model1, geometry1)
-#     model1.build(geometry1)
-#     model1.save()
-#
-#
-#     creating_details(matrix0, N, radius1*2, model1, geometry1, physics1, terminal_other1, initial_values1, terminal_leg1)
-#     change_radius_out(model1, geometry1, circle_ground1, 0.2)
-#     model1.build(geometry1)
-#     model1.save()
-#     model1.solve('Study 1')
-#     m = evaluate_matrix(model1, 'Study 1//Parametric Solutions 2')
-#     print(m)
-#
-#     model1.save()
 
+# def creating_details_new(size: int, a, model, geometry, physic, initial_values, circle_ground):
+#     # node_local = model / 'geometry' / geometry / circle_ground
+#     # node_local.property('type', 'curve')
+#     # a - сторона квадрата
+#     k = a / size  # цена деления
+#     node = model / 'geometry' / geometry
+#     node_values = model / 'physics' / physic / initial_values
+#     for i in range(0, size):
+#         for j in range(0, size):
+#             name_for_square = 's_' + str(i) + '_' + str(j)  # имя блока
+#             node.create('Square', name=name_for_square)
+#             node_local = node / name_for_square
+#             node_local.property('size', k)
+#             node_local.property('selresult', 'on')
+#             node_local.property('selresultshow', 'all')
+#             node_local.property('color', '5')
+#             node_local.property('base', 'center')
+#             node_local.property('x', j * k + k / 2)
+#             node_local.property('y', -i * k - k / 2)
+#             model.build(geometry)
+#
+#     list_terminal = node_values.selection()
+#     model.save()
+#     return list_terminal
+
+
+# def change_terminals(matrix, list_terminal, size: int, model, physic, terminal_other, terminal_leg):
+#     list_terminal_leg = []
+#     list_terminal_other = []
+#     node_other = model / 'physics' / physic / terminal_other
+#     node_leg = model / 'physics' / physic / terminal_leg
+#     c = 0
+#     for j in range(0, size):
+#         for i in range(size - 1, -1, -1):
+#             if matrix[i, j] != 0:
+#                 if matrix[i, j] == 1:
+#                     list_terminal_leg.append(list_terminal[c])
+#
+#                 if matrix[i, j] > 1:
+#                     list_terminal_other.append(list_terminal[c])
+#
+#             c = c + 1
+#     list_terminal_leg = np.array(list_terminal_leg)
+#     list_terminal_other = np.array(list_terminal_other)
+#     node_other.select(list_terminal_other)
+#     node_leg.select(list_terminal_leg)
+#     return
