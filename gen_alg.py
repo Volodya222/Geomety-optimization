@@ -26,7 +26,7 @@ c11 = 2845
 c12 = 2289
 c22 = 3644
 detail_number = 3
-
+delta = 0.000001
 
 pop_size = 5
 initial_population = []
@@ -52,7 +52,7 @@ for i in range(pop_size):
 def fitness_func(solution, solution_idx):
     vector_cap = mc.capacitance(solution.reshape(N, N), radius)
     # a = np.random.random(3)
-    fitness = 1.0 / (0.000001 + np.sqrt((vector_cap[0]-c11)**2) + np.sqrt((vector_cap[1]-c12)**2) + np.sqrt((vector_cap[2]-c22)**2))
+    fitness = 1.0 / (delta + np.sqrt((vector_cap[0]-c11)**2) + np.sqrt((vector_cap[1]-c12)**2) + np.sqrt((vector_cap[2]-c22)**2))
     # fitness = hash(solution.tostring)
     return fitness
 
@@ -122,6 +122,9 @@ def on_generation(ga_instance):
             if (i*n + j) < pop_size:
                 vector = ga_instance.population[i*n + j]
                 axs[i, j].imshow(vector.reshape((N, N)))
+                t = round(np.log(ga_instance.last_generation_fitness[i*n + j] * delta), 2)
+                axs[i, j].set_title(f'{t}')
+                [axi.set_axis_off() for axi in axs.ravel()]
     plt.suptitle(f'step {step_count}')
     #plt.show()
     plt.savefig(f'{gen_plotpath}/plot_{step_count}')
@@ -138,8 +141,7 @@ def on_crossover(ga_instance, offspring):
     index_del = np.asarray(index_del, dtype=bool)
 
     ga_instance.population = ga_instance.population[index_del, :]
-def on_fitness(ga_instance, population_fitness):
-    print("on_fitness()")
+
 
 def on_start(ga_instance):
     fig, axs = plt.subplots(n, n)
@@ -148,6 +150,7 @@ def on_start(ga_instance):
             if (i * n + j) < pop_size:
                 vector = ga_instance.initial_population[i * n + j - 1]
                 axs[i, j].imshow(vector.reshape((N, N)))
+                [axi.set_axis_off() for axi in axs.ravel()]
     plt.suptitle(f'step {step_count}')
     #plt.show()
     plt.savefig(f'{gen_plotpath}/plot_{step_count}')
