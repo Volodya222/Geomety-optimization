@@ -2,41 +2,29 @@ import geomety_test as gt
 import numpy as np
 import copy
 from matplotlib import pyplot as plt
+import ground
+import  fix_det as fd
 
-N = 10
+'''
+N = 15
 x = np.random.randint(0, 2, (N,N))
 x1 = gt.smooth(x)
 y, count = gt.parts(x1)
 rad_ground = N / 2
 ground_flag = False
-for i in range(0, N):
-    for j in range(0, N):
-        if np.power(j * 2 * rad_ground / N - rad_ground, 2) + np.power(i * 2 * rad_ground / N - rad_ground,
-                                                                       2) < np.power(rad_ground, 2) and \
-                np.power((j + 1) * 2 * rad_ground / N - rad_ground, 2) + np.power(
-            (i + 1) * 2 * rad_ground / N - rad_ground, 2) < np.power(rad_ground, 2) and \
-                np.power(j * 2 * rad_ground / N - rad_ground, 2) + np.power(
-            (i + 1) * 2 * rad_ground / N - rad_ground, 2) < np.power(rad_ground, 2) and \
-                np.power((j + 1) * 2 * rad_ground / N - rad_ground, 2) + np.power(
-            i * 2 * rad_ground / N - rad_ground, 2) < np.power(rad_ground, 2): \
-                mutation_flag = True
-        else:
-            y[i, j] = 0
+y = ground.ground_test(y, rad_ground, N)
 y, count = gt.parts(y)
-
-'''
-def ground(y, ground_flag, rad_ground):
-    for i in range(1, N-1):
-        for j in range(1, N-1):
-            if np.power(i - rad_ground, 2) + np.power(j - rad_ground, 2) > np.power(rad_ground, 2):
-                y[i, j] = 0
 '''
 
-def mutation(y):
 
-    # mutation_number = np.random.randint(1, count+1)
+
+def mutation(y, N):
+    rad_ground = N / 2
+    a, count = gt.parts(y)
+    count_matrix = []
+    mutation_number = np.random.randint(1, count+1)
     mutation_flag = True
-    mutation_number = 1
+    # mutation_number = 1
     number_list = []
     neighbors_list = []
 
@@ -46,7 +34,7 @@ def mutation(y):
         y[i, 0] = 0
         y[N-1, i] = 0
         y[i, N-1] = 0
-        '''
+    '''
 
     for i in range(1, N-1):
         for j in range(1, N-1):
@@ -61,8 +49,8 @@ def mutation(y):
                     neighbors_list.append([i, j+1])
                 if y[i, j-1] == 0:
                     neighbors_list.append([i, j-1])
-    # pixels_fate = np.random.randint(0, 2)
-    pixels_fate = 0
+    pixels_fate = np.random.randint(0, 2)
+    # pixels_fate = 0
     positions_for_delete = []
     k = 0
     y_1 = copy.copy(y)
@@ -104,70 +92,52 @@ def mutation(y):
                             k += 1
         for i in range(0, len(positions_for_delete)):
              y_1[positions_for_delete[i][0], positions_for_delete[i][1]] = mutation_number
-    '''
-    for i in range(1,N-1):
-        for j in range(1,N-1):
-            if y_1[i, j] != 0:
-                if y_1[i+1, j] != 0:
-                    if y_1[i, j] != y_1[i+1, j]:
-                        mutation_flag = False
-                if y_1[i-1, j] != 0:
-                    if y_1[i, j] != y_1[i-1, j]:
-                        mutation_flag = False
-                if y_1[i, j+1] != 0:
-                    if y_1[i, j] != y_1[i, j+1]:
-                        mutation_flag = False
-                if y_1[i, j-1] != 0:
-                    if y_1[i, j] != y_1[i, j-1]:
-                        mutation_flag = False
-                if y_1[i+1, j+1] != 0:
-                    if y_1[i, j] != y_1[i+1, j+1]:
-                        mutation_flag = False
-                if y_1[i+1, j-1] != 0:
-                    if y_1[i, j] != y_1[i+1, j-1]:
-                        mutation_flag = False
-                if y_1[i-1, j+1] != 0:
-                    if y_1[i, j] != y_1[i-1, j+1]:
-                        mutation_flag = False
-                if y_1[i-1, j-1] != 0:
-                    if y_1[i, j] != y_1[i-1, j-1]:
-                        mutation_flag = False
-                        '''
-    for i in range(0, N):
-        for j in range(0, N):
-            if np.power(j * 2*rad_ground / N - rad_ground, 2) + np.power(i * 2*rad_ground / N - rad_ground, 2) < np.power(rad_ground, 2) and \
-               np.power((j+1) * 2 * rad_ground / N - rad_ground, 2) + np.power((i+1) * 2 * rad_ground / N - rad_ground, 2) < np.power(rad_ground, 2) and \
-               np.power(j * 2 * rad_ground / N - rad_ground, 2) + np.power((i+1) * 2 * rad_ground / N - rad_ground, 2) < np.power(rad_ground, 2) and \
-               np.power((j+1) * 2 * rad_ground / N - rad_ground, 2) + np.power(i * 2 * rad_ground / N - rad_ground, 2) < np.power(rad_ground, 2): \
-                mutation_flag = True
-            else:
 
-                y_1[i, j] = 0
+    y_1 = ground.ground_test(y_1, rad_ground, N)
+    for i in range(count):
+        count_matrix.append([])
+    for k in range(1, count + 1):
+        for i in range(0, N):
+            for j in range(0, N):
+                if y[i, j] == k:
+                    count_matrix[k-1].append([i, j])
+
     zero_matrix = np.zeros_like(y)
     zero_matrix, count_new = gt.parts(y_1)
-    
+
     if count_new == count:
-        mutation_flag
+        mutation_flag = True
     else:
         mutation_flag = False
 
     if mutation_flag == True:
-        return y, y_1, pixels_fate, mutation_number, positions_for_delete, mutation_flag, count_new
+        pass
     else:
-        return y, y_1, pixels_fate, mutation_number, positions_for_delete, mutation_flag, count_new
-
+        count_matrix_new_copy = fd.intersections(count_matrix, mutation_number)
+        for i in range(len(count_matrix_new_copy)):
+            for j in range(len(count_matrix_new_copy[i])):
+                n, k = count_matrix_new_copy[i][j]
+                y_1[n, k] = i + 1
+    zero_matrix, count_new = gt.parts(y_1)
+    if count_new == count:
+        mutation_flag = True
+    else:
+        mutation_flag = False
+    if (y == y_1).all():
+        mutation_flag = False
+    return y_1, mutation_flag
 # print(mutation(y))
+'''
+y, y_1, mutation_flag  = mutation(y, N)
 
-y, y_1, pixels_fate, mutation_number, positions_for_delete, mutation_flag, count_new = mutation(y)
-
-
+print(mutation_flag)
 plt.imshow(y)
 plt.show()
 plt.imshow(y_1)
 plt.show()
-print(mutation_flag)
-print(count)
-print(count_new)
+'''
+
+
 
 
 
