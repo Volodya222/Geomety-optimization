@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b55eca0d-8fe7-4669-add1-8ddd8ee6aaa2" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/gen_alg.py" beforeDir="false" afterPath="$PROJECT_DIR$/gen_alg.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gen_plots_12_18_2022_12_28/plot_0.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gen_plots_12_18_2022_12_28/plot_1.png" beforeDir="false" />
-    </list>
+    <list default="true" id="b55eca0d-8fe7-4669-add1-8ddd8ee6aaa2" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
