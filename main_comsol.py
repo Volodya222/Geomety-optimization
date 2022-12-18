@@ -45,3 +45,14 @@ def capacitance(matrix, radius):
     return vector
 
 
+
+# def capacitance_new(matrix):
+#     node_local.property('type', 'curve')
+#     ffc.change_terminals(matrix, list_terminal, n, model0, physics0, terminal_other0, terminal_leg0)
+#     model0.build(geometry0)
+#     node_local.property('type', 'solid')
+#     model0.build(geometry0)
+#     # model0.solve('Study 1')
+#     # vector = ffc.evaluate_matrix(model0, 'Study 1//Parametric Solutions 2')
+#     model0.save()
+#     return
