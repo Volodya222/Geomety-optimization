@@ -7,8 +7,14 @@ import krossingover
 import mutation
 import ground
 import sss
-# import main_comsol as mc
+import main_comsol as mc
+import datetime
+import os
 
+now = datetime.datetime.now()
+s1 = now.strftime("%m_%d_%Y_%H_%M")
+gen_plotpath = f'gen_plots_{s1}'
+os.mkdir(gen_plotpath)
 step_count = 0
 radius = 0.1
 N = 15
@@ -19,6 +25,7 @@ count_matrix_1 = []
 c11 = 2845
 c12 = 2289
 c22 = 3644
+detail_number = 3
 
 
 pop_size = 5
@@ -26,7 +33,7 @@ initial_population = []
 counting_list = []
 for i in range(pop_size):
     count_i = 0
-    while count_i < 2:
+    while count_i != detail_number:
 
         x_i = np.random.randint(0, 2, (N, N))
         x1_i = gt.smooth(x_i)
@@ -43,15 +50,15 @@ for i in range(pop_size):
 
 
 def fitness_func(solution, solution_idx):
-    # vector_cap = mc.capacitance(solution.reshape(N, N), radius)
+    vector_cap = mc.capacitance(solution.reshape(N, N), radius)
     # a = np.random.random(3)
-    # fitness = 1.0 / (0.000001 + np.sqrt((vector_cap[0]-c11)**2) + np.sqrt((vector_cap[1]-c12)**2) + np.sqrt((vector_cap[2]-c22)**2))
-    fitness = hash(solution.tostring)
+    fitness = 1.0 / (0.000001 + np.sqrt((vector_cap[0]-c11)**2) + np.sqrt((vector_cap[1]-c12)**2) + np.sqrt((vector_cap[2]-c22)**2))
+    # fitness = hash(solution.tostring)
     return fitness
 
 
-
 def crossover_func(parents, offspring_size, ga_instance):
+
     new_gen = parents.copy()
     offspring = []
     parent1 = parents[0].reshape(N, N)
@@ -116,7 +123,9 @@ def on_generation(ga_instance):
                 vector = ga_instance.population[i*n + j]
                 axs[i, j].imshow(vector.reshape((N, N)))
     plt.suptitle(f'step {step_count}')
-    plt.show()
+    #plt.show()
+    plt.savefig(f'{gen_plotpath}/plot_{step_count}')
+    plt.clf()
 
 def on_crossover(ga_instance, offspring):
     index_del = np.ones((ga_instance.population.shape[0]))
@@ -129,6 +138,8 @@ def on_crossover(ga_instance, offspring):
     index_del = np.asarray(index_del, dtype=bool)
 
     ga_instance.population = ga_instance.population[index_del, :]
+def on_fitness(ga_instance, population_fitness):
+    print("on_fitness()")
 
 def on_start(ga_instance):
     fig, axs = plt.subplots(n, n)
@@ -138,7 +149,9 @@ def on_start(ga_instance):
                 vector = ga_instance.initial_population[i * n + j - 1]
                 axs[i, j].imshow(vector.reshape((N, N)))
     plt.suptitle(f'step {step_count}')
-    plt.show()
+    #plt.show()
+    plt.savefig(f'{gen_plotpath}/plot_{step_count}')
+    plt.clf()
 
 
 

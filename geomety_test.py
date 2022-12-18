@@ -30,6 +30,19 @@ def parts(x):
                     if i>0 and x[i-1, j] == count:
                         x[i, j] = count
                         find_flag = True
+                    if j<m-1 and i < n-1 and x[i+1, j+1] ==  count:
+                        x[i, j] = count
+                        find_flag = True
+                    if j>0 and i>0 and x[i-1, j-1] == count:
+                        x[i, j] = count
+                        find_flag = True
+                    if i<n-1 and j> 0 and x[i+1, j-1] == count:
+                        x[i, j] = count
+                        find_flag = True
+                    if i>0 and j < m-1 and x[i-1, j+1] == count:
+                        x[i, j] = count
+                        find_flag = True
+                                        
 
                     if x[i, j] == count:
                         if j<m-1 and x[i, j+1] == -1:
@@ -43,6 +56,18 @@ def parts(x):
                             find_flag = True
                         if i>0 and x[i-1, j] == -1:
                             x[i-1, j] = count
+                            find_flag = True
+                        if j<m-1 and i < n-1 and x[i+1, j+1] == -1:
+                            x[i, j] = count
+                            find_flag = True
+                        if j>0 and i>0 and x[i-1, j-1] == -1:
+                            x[i, j] = count
+                            find_flag = True
+                        if i<n-1 and j> 0 and x[i+1, j-1] == -1:
+                            x[i, j] = count
+                            find_flag = True
+                        if i>0 and j < m-1 and x[i-1, j+1] == count:
+                            x[i, j] = count
                             find_flag = True
         if not find_flag:
             start_flag = True
