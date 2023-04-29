@@ -3,7 +3,7 @@ import numpy as np
 import copy
 from matplotlib import pyplot as plt
 import ground
-'''
+
 N = 15
 x = np.random.randint(0, 2, (N,N))
 x1 = gt.smooth(x)
@@ -21,7 +21,7 @@ y = ground.ground_test(y, rad_ground, N)
 y_1 = ground.ground_test(y_1, rad_ground, N)
 y, count = gt.parts(y)
 y_1, count_1 = gt.parts(y_1)
-'''
+
 
 
 
@@ -166,12 +166,17 @@ def krossingover(y,y_1, N, kross_number):
         pass
     else:
         mutation_flag1 = False
+
+    if np.array_equal(y, y_new):
+        mutation_flag = False
+    if np.array_equal(y_1, y_new1):
+        mutation_flag1 = False
     return(y_new, y_new1, mutation_flag, mutation_flag1)
     # return(y, y_new, count_matrix, count, y_1, y_new1, count_matrix_1, count_1, mutation_flag, mutation_flag1, count_new, count_new1)
+
+y_new, y_new1, f1,f2 = krossingover(y, y_1,N, kross_number = 1)
+
 '''
-y_new, y_new1, f1,f2 = krossingover(y, y_1,N)
-
-
 print(f1, f2)
 ang = np.linspace(0, 2*np.pi)
 xs = np.cos(ang) * rad_ground + rad_ground - rad_ground / N
@@ -181,9 +186,9 @@ axs[0, 0].imshow(y)
 axs[1, 0].imshow(y_1)
 axs[0, 1].imshow(y_new)
 axs[1, 1].imshow(y_new1)
-axs[0, 0].plot(xs, ys)
-axs[1, 0].plot(xs, ys)
-axs[0, 1].plot(xs, ys)
-axs[1, 1].plot(xs, ys)
+# axs[0, 0].plot(xs, ys)
+# axs[1, 0].plot(xs, ys)
+# axs[0, 1].plot(xs, ys)
+# axs[1, 1].plot(xs, ys)
 plt.show()
 '''
