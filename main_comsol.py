@@ -46,6 +46,7 @@ def capacitance(matrix, radius):
 
 
 
+
 # def capacitance_new(matrix):
 #     node_local.property('type', 'curve')
 #     ffc.change_terminals(matrix, list_terminal, n, model0, physics0, terminal_other0, terminal_leg0)
