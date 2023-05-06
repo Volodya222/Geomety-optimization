@@ -65,7 +65,7 @@ def create_plates(n):
 
 def solver(geometry: np.ndarray):
     # размер матрицы
-    size: int = 20
+    size: int = 100
     # внешний радиус
     rad = 0.3
     # сторона квадрата, в котором генерируется и земля, и детали

@@ -12,6 +12,9 @@ import datetime
 import os
 import similarity as sim
 import project_2 as pr
+import pngtopy as png
+
+
 
 
 
@@ -21,7 +24,7 @@ gen_plotpath = f'gen_plots_{s1}'
 os.mkdir(gen_plotpath)
 step_count = 0
 radius = 0.1
-N = 20
+N = 100
 Full_sq = N ** 2
 mutation_flag = True
 rad_ground = N / 2
@@ -35,26 +38,35 @@ delta = 1
 desired_detail_num = 2
 desired_square_percent = 0.4
 
-pop_size = 5
+pop_size = 3
 initial_population = []
 counting_list = []
-for i in range(pop_size):
-    count_i = 0
-    while count_i != detail_number:
-
-        x_i = np.random.randint(0, 2, (N, N))
-        x1_i = gt.smooth(x_i)
-        y_i, count_i = gt.parts(x1_i)
-        y_ig = ground.ground_test(y_i, rad_ground, N)
-        y_ig, count_i = gt.parts(y_ig)
-    counting_list.append(count_i)
-    y_inum=y_ig.reshape((-1,))
-
-    initial_population.append(y_inum)
+# for i in range(pop_size):
+#     count_i = 0
+#     while count_i != detail_number:
+#
+#         x_i = np.random.randint(0, 2, (N, N))
+#         x1_i = gt.smooth(x_i)
+#         y_i, count_i = gt.parts(x1_i)
+#         y_ig = ground.ground_test(y_i, rad_ground, N)
+#         y_ig, count_i = gt.parts(y_ig)
+#     counting_list.append(count_i)
+#     y_inum=y_ig.reshape((-1,))
+#
+#     initial_population.append(y_inum)
+initial_population.append(png.convert('g1.jpeg').reshape((-1,)))
+initial_population.append(png.convert('g2.jpeg').reshape((-1,)))
+initial_population.append(png.convert('g3.jpeg').reshape((-1,)))
+# initial_population.append(png.convert('g4.jpeg').reshape((-1,)))
+# initial_population.append(png.convert('g5.jpeg').reshape((-1,)))
 
 # print(initial_population)
 
-# print(type(initial_population))
+print(type(initial_population[1]))
+print(initial_population[1].reshape(N,N))
+print(initial_population[1].reshape(N,N).shape)
+print(type(initial_population[2]))
+print(initial_population[2].reshape(N,N).shape)
 
 def fitness_func(solution, solution_idx):
     # vector_cap = mc.capacitance(solution.reshape(N, N), radius)
