@@ -65,7 +65,7 @@ def change_radius_out(model, geometry, circle_ground, r):
     node_local.property('r', r)
     node_local.property('x', r)
     node_local.property('y', -r)
-    model.save()
+    #model.save()
     return
 
 
